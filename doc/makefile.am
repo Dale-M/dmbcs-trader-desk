@@ -1,0 +1,24 @@
+man1_MANS = trader-desk.man
+
+info_INFO = trader-desk.info
+
+pkgdata_DATA = trader-desk.pdf trader-desk.html
+
+trader-desk : trader-desk.texinfo trader-desk.css
+	makeinfo --html --css-include=trader-desk.css $<
+	cp {detailed-analysis,grid,preferences}.png trader-desk
+
+trader-desk.html : trader-desk.texinfo trader-desk.css
+	makeinfo --html --no-split --no-headers --css-include=trader-desk.css $<
+
+trader-desk.pdf : trader-desk.texinfo
+	makeinfo --pdf --no-headers $<
+
+trader-desk.info : trader-desk.texinfo
+	makeinfo $<
+
+CLEANFILES = trader-desk.html trader-desk.info trader-desk.pdf \
+	         trader-desk.aux trader-desk.bbl trader-desk.blg trader-desk.cp \
+			 trader-desk.cps trader-desk.dvi trader-desk.fn \
+			 trader-desk.ky trader-desk.log trader-desk.pg trader-desk.tmp \
+             trader-desk.toc trader-desk.tp trader-desk.vr

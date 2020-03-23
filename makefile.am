@@ -1,0 +1,58 @@
+#  Copyright (c) 2020  Dale Mellor
+#
+#   This file is part of the trader-desk package.
+#
+#   The trader-desk package is free software: you can redistribute it
+#   and/or modify it under the terms of the GNU General Public License as
+#   published by the Free Software Foundation, either version 3 of the
+#   License, or (at your option) any later version.
+#
+#   The trader-desk package is distributed in the hope that it will be
+#   useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+#   General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see http://www.gnu.org/licenses/.
+
+
+SUBDIRS  =  trader-desk  .  po
+
+ACLOCAL_AMFLAGS  =  --install  -I m4
+
+if database_data
+  DTA = data.sql.xz
+else
+  DTA =
+endif
+dist_pkgdata_DATA  =  trader-desk.png  ${DTA}
+
+pkgconfigdir  =  ${libdir}/pkgconfig
+pkgconfig_DATA  =  trader-desk.pc
+
+DISTFILES  =  ABOUT-NLS
+
+MAINTAINERCLEANFILES = ABOUT-NLS \
+                       aclocal.m4 \
+                       build-aux/compile \
+                       build-aux/config.guess \
+                       build-aux/config.rpath \
+                       build-aux/config.sub \
+                       build-aux/depcomp \
+                       build-aux/install-sh \
+                       build-aux/ltmain.sh \
+                       build-aux/missing \
+                       config.status \
+                       config.log \
+                       configure \
+                       makefile \
+                       makefile.in \
+                       po/en@boldquot.po \
+                       po/en@quot.po \
+                       po/Makefile.in.in \
+                       po/Makevars.template \
+                       po/trader-desk.pot
+
+#  Don't know why we need to do this.
+dist-hook:
+	cp -rp aclocal.m4 AUTHORS build-aux ChangeLog configure configure.ac COPYING INSTALL libtool makefile.am makefile.in NEWS README trader-desk.png $(top_distdir)

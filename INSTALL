@@ -1,0 +1,25 @@
+* Build instructions
+
+*** From a GIT checkout
+
+    First, cd into the top-level source directory, then type
+
+        autoreconf --install  &&  ./configure --prefix=$PWD/install  &&  \
+          make install
+
+    (you can of course run each piece separately), after which the program will
+    be installed at install/bin/cosmosis.
+
+
+    If you make subsequent changes in the code base, you only need to run
+
+        make && make install
+
+    to have your changes implemented in the installation.
+
+
+*** From a tarball
+
+    Unpack the tar file and cd into the top directory, then type
+
+        ./configure --prefix=$PWD/install  &&  make install

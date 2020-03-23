@@ -1,0 +1,13 @@
+prefix       =  @prefix@
+exec_prefix  =  ${prefix}
+libdir       =  ${exec_prefix}/lib
+includedir   =  ${prefix}/include
+
+Name        :  trader-desk
+Description :  DMBCS Trader Desk
+Version     :  @VERSION@
+Requires    :  gtkmm-3.0 gthread-2.0 dmbcs-market-data-api
+Libs        :  -L${libdir}  @gtk_config_LIBS@  \
+                    -ldmbcs-market-data-api -ltrader-desk
+Cflags      :  -I${includedir}  @gtk_config_CFLAGS@  \
+                    -DHAVE_MYSQL=@HAVE_MYSQL@  -DHAVE_MARIADB=@HAVE_MARIADB@

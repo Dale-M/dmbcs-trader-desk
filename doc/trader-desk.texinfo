@@ -1,0 +1,1025 @@
+\input texinfo   @c -*-texinfo-*-
+@c %**start of header
+@setfilename trader-desk.info
+@settitle Trader Desk
+@c %**end of header
+@copying
+Trader Desk
+
+Copyright @copyright{} 2017  The @emph{trader-desk} developers
+
+@quotation
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled ``GNU Free
+Documentation License''.
+
+A copy of the license is also available from the Free Software
+Foundation Web site at @url{http://www.gnu.org/licenses/fdl.html}.
+
+@end quotation
+@end copying
+
+@titlepage
+@title Trader Desk 0.1
+@subtitle Trading robot developer environment
+@author Dale Mellor
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@ifnottex
+@node Top, Foreword, (dir), (dir)
+@top Trader Desk 0.1
+
+@insertcopying
+@end ifnottex
+
+@c Generate the nodes for this menu with `C-c C-u C-m'.
+@menu
+* Foreword::
+* Introduction::
+* Installation guide::
+* User Guide::                  Invoking trader-desk.
+* Algorithms::
+* Developer::
+* Time Line::
+* Copying This Manual::
+* Index::
+@end menu
+
+@c Update all node entries with `C-c C-u C-n'.
+@c Insert new nodes with `C-c C-c n'.
+@node Foreword, User Guide, Top, Top
+@chapter Foreword
+
+@section Set up to Fail
+
+@subsection The Evil That Men Do
+
+There are many things wrong with the world.  The worst three, in our
+opinion from our haughty point of view in the West, are third-world food
+shortages, the buy-to-let property industry, and the global stock
+exchanges.  The first problem is difficult, but the latter involve able
+people sitting on their back-sides while actively screwing other people,
+able or not, out of their own money, contributing nothing to the useful
+output of any economy.  At least the latter sin offers the prospect for
+little people (like us) to shamefully bury their scruples and suckle at
+the nipple of big business, and take just a tiny amount of glut for
+themselves.  Or, more probably, not.
+
+For we are the worst traders on Earth.  It all started when times were
+roaring, before the financial crisis and the fall of @emph{big} banks:
+one day we bought shares for the first time, sold them later that same
+day, and made a hundred pounds in profit there and then.  Could life get
+simpler?  Unfortunately, such times have never returned, and over the
+years, we have come to realize that the only way to make money is to
+invest long-term in a solid (i.e. massive) company, and you will
+hopefully do better than the meagre interest on a bank savings account.
+Or maybe not.
+
+@cindex financial crisis
+Unfortunately, after being burned badly by the financial crisis and lost
+a lot of money (for us), we've been unable to resist the urge to try to
+make a quick buck here and there, and, though we no longer dabble in the
+folly of amateur day-trading, still play at trying to out-fox the market
+and make a quick profit: buying one day in the hope that the price will
+go up in the next few days to be able to pull a quick profit; it rarely
+does.
+
+Being not very good traders, we've never bothered doing any actual
+research in the companies we've bought in to, but go on historical
+market data alone to decide where our next gamble will be.  Thus, in
+those years of trading we have found the need to assimilate market data
+in a local database so that we can explore at will, quickly.  We also
+found the need to visualize the entire market, as well as explore
+individual positions interactively and with great flexibility of
+presentation.  Finally, we have the desire to build us an artificial
+intelligence to inform our trading decisions, based on the collected
+historical market data.
+
+Applications and widgets abound which display stock market data every
+which way you can, and each way seems to show the data in a different
+light (a stock looks good to buy one minute, but hopeless when viewed
+another way in a different application).  This application aims to allow
+for a more interactive exploration of market data, a maximal overview of
+the whole market, and to provide a platform for artificial intelligence
+algorithms to be developed to identify good buys and sells.
+
+@subsection Trading (don't)!
+
+There's a simple reason why you can't out-fox the markets: if a perfect
+algorithm existed everyone would use it and nobody would win.  As it is,
+the banks and large agencies have far more resources than you to develop
+good (very, very, good) algorithms, to the extent that if they ever find
+out what algorithm you are using they will use the knowledge against
+you: work out what your next move will likely be, and move to capitalize
+on your mis-fortune.
+
+The markets are like a very complex game of chess.  It is warfare.
+Dog-eat-dog warfare.  It is your own real, hard-won, money that you will
+lose when you are defeated in battle.
+
+For this reason there is no point in us telling you the secret to our
+(lack of) success.  Nor is there any point in you taking anyone else's
+advice.  In fact, the large agencies are apt to give out lots of advice
+to investors knowing how the advice itself will affect the markets and
+moving to capitalize themselves.  Never bother following @emph{The
+Motley Fool}.  Wish we didn't have to mention them.  For this reason
+@code{trader-desk} does not come with any trading strategies built in.
+That would just be us shooting ourselves in the foot.
+
+The only chance you have of success is by developing a unique strategy
+of your own and keeping it to yourself.  The ultimate aim of
+@code{trader-desk} is to help you to develop that strategy, and to
+implement it in code.
+
+@subsection Caveat Emptor
+
+What you do in the stock markets is entirely up to you.  We've already
+tried to dissuade you from trying to play the game and get rich quick.
+If you do, and you use this application, that's your choice.  But your
+ultimate actions are nothing to do with us.  We hereby divulge ourselves
+of all responsibility for your future well-being through use of this
+application (or otherwise, actually).
+
+@section The @code{trader-desk} Application
+
+@cindex trader-desk
+This introduction to the @code{trader-desk} application has been
+deliberately meaty.  We've tried our best to persuade you that using
+this application is not a good idea, for the reasons given above.
+However, if you've come this far and we haven't frightened you away,
+welcome.  We'll lighten the tone from now on, and get to thinking
+positive!
+
+@contents
+
+@node Introduction, Installation guide, Foreword, Top
+@chapter Introduction
+
+This manual pertains to pre-release version 0.1 of the
+@code{trader-desk} application.  Despite the lowness of this number
+and the fact that it is the very first release, do not underestimate
+the amount of effort which has already been invested in this project!
+
+@cindex alpha software
+First, understand that this is the very first release of untested
+alpha-grade software.  It has some arbitrary limitations (availability
+of market data, UK-centric outlook, lack of customizability), and some
+idiosyncrasies that will be mildly annoying.  Read the @ref{Time Line}
+chapter for further information on the current state and direction of
+the code base.
+
+@cindex bug reporting
+To report bugs or make contact with the authors please go to
+@url{http://rdmp.org/trader-desk/contact}.
+
+We take such pride in our work that hopefully there aren't any hard bugs
+as such: ones which cause the program to shut down or become terminally
+unresponsive, or corrupt the local database.  But no guarantees.
+
+@node Installation guide, User Guide, Foreword, Top
+@chapter Installation Guide
+
+The software has been successfully installed on Debian Jessie (stable),
+Stretch (testing), Ubuntu 16.04 LTS, Ubuntu 17.04 (all Debian derivatives)
+and Fedora 25 Workstation (a Red Hat derivative).  We've also tried to
+use Scientific Linux 7, but that is so far behind the curve that
+@code{trader-desk} cannot be compiled here.
+
+The build is actually a very standard @emph{autotools} procedure:
+@code{./configure --with-database-password=xxx; make; make install;},
+hence it should be possible to build on most POSIXish operating systems.
+Instructions below are for the select specific Gnu/Linux distributions
+mentioned above, and may need to be adapted for other systems.
+
+@menu
+* System Preparation::
+* Database Preparation::
+* Trader-Desk Installation::
+* Issues::
+@end menu
+
+@node System Preparation,  , Installation guide, Installation guide
+@section System Preparation
+
+At the command line (you will need @code{sudo} privilege on the system,
+and may be prompted -- just once -- for your login password).
+
+@enumerate
+
+@item  Fedora 25 Workstation
+@example
+sudo yum install mariadb mariadb-server mariadb-devel gettext-devel \
+                 patch gcc-c++ libcurl-devel gtkmm24(-devel?)
+sudo systemctl start mariadb
+@end example
+
+@item  Debian stable (Jessie)
+@example
+sudo apt install build-essential mariadb-client mariadb-server \
+                 libmariadb-client-lgpl-dev gettext pkg-config curl \
+                 gtkmm-2.4 libcurl4-openssl-dev
+@end example
+
+
+@item  Debian testing (Stretch)
+@example
+sudo apt install build-essential mariadb-client mariadb-server \
+                 libmariadbclient-dev gettext pkg-config curl
+@end example
+
+
+@item  Ubuntu 16.04
+@example
+sudo apt install autoconf autopoint libtool mariadb-client \
+                 mariadb-server libmariadb-client-lgpl-dev gtkmm-2.4 \
+                 libcurl4-openssl-dev curl
+@end example
+
+
+@item  Ubuntu 17.04
+@example
+sudo apt install autoconf autopoint libtool mariadb-client \
+                 mariadb-server libmariadbclient-dev gtkmm-2.4 \
+                 libcurl4-openssl-dev curl
+@end example
+
+
+@end enumerate
+
+@node Database Preparation,  , System Preparation, Installation guide
+@section Database Preparation
+
+On all systems, at the command-line:
+
+@example
+sudo mysql -u root
+>>  create user trader_desk@@localhost;
+>>  grant all privileges on *.* to trader_desk@@localhost;
+>>  exit;
+mysql -u trader_desk
+>>  create database companies;
+>>  exit;
+@end example
+
+@node Trader-Desk Installation,  , Database Preparation, Installation guide
+@section Trader-Desk Installation
+
+On all systems, at the command-line:
+
+@example
+curl https://rdmp.org:9443/trader-desk/trader-desk-0.1.tar.gz | tar xzf -
+cd trader-desk-0.1
+cp trader-desk/example-config.h trader-desk/config.h
+
+[ On Fedora only: edit trader-desk/config.h and change the
+                  DATABASE_SOCKET to /var/lib/mysql/mysql.sock. ]
+
+./configure --with-database-password= --without-boost
+make
+sudo make install
+@end example
+
+@subsection Variations
+
+The above instructions are deliberately the minimum you need to get
+going.  However you may need to vary these for your installation:
+
+@enumerate
+@item
+
+Use a @code{--prefix} option on the @code{configure} line to specify
+where to install the @code{trader-desk} application.  You would need to
+do this if you don't have @code{sudo} access (the default is to install
+under @code{/usr/local}).
+
+@item
+
+Set a password on the @code{trader_desk} database account.  Also, if the
+@code{root} account has a password set, this will need adding to the
+@code{mysql -u root} line.
+
+@item
+
+Make customizations of the @code{trader-desk/config.h} file.  For
+example, extend the date range for which market prices are initially
+obtained.
+
+@end enumerate
+
+
+@node Issues,  , Trader-Desk Installation, Installation guide
+@section Issues
+
+If you are using Ubuntu, the `Update' menu does not become inactive when
+a single company is in the main display; using the items on this menu
+when a single chart is displayed in the main window WILL cause the
+program to crash.
+
+@node User Guide, Algorithms, Installation guide, Top
+@chapter User Guide
+
+@menu
+* Getting Started::             Running the program
+@end menu
+
+
+@node Getting Started,  , User Guide, User Guide
+@section Getting Started
+
+@cindex Running the program
+@example 
+trader-desk [--version | --help]
+@end example
+
+@cindex version
+Unless you are simply looking to find out the version of the installed
+program (using the --version option), simply running
+@code{trader-desk} will start the program and produce a new window on
+the screen.
+
+As soon as the program starts you will be presented with a number of
+markets in which you may take an interest.  Double-click on one of
+these markets.  It will take some time to ingest a few years' data for
+the entire market; be patient.
+
+Now, maximize the window, enjoy your overview of recent market
+movements, click on one of the components (companies), and move the
+mouse around...
+
+
+@menu
+* Main screen::
+* Detailed analysis::
+* Preferences::
+* Menus::
+@end menu
+
+
+@node Main screen, Detailed analysis, Getting Started, Getting Started
+@section The Main Screen
+
+This screen shows the last 50 days' prices for all components in a
+market, so that you can see at a glance which stocks are overall up and
+which are overall down, and, more to the point, which are turning.
+
+The menu is fully serviceable on this screen: data from other markets
+can be obtained from the `File' menu, the components of a different
+market can be shown from the `Display' menu, and the most up to date
+data can be obtained for the current market from the `Market' menu.
+
+Finally, to analyze a company's stocks in more detail, simply click on
+the appropriate chart.
+
+@image{grid,,,Screen with thumb-nail chart for every company,png}
+
+
+@node Detailed analysis, Preferences, Main screen, Getting Started
+@section The Detailed Analysis
+
+This screen shows the price data for a single company, and the user can
+use the mouse to change the nature of the display, show precise stock
+values at arbitrary times, and indicate a rectangular region across
+which differential values are shown.
+
+Note that the window as you see it may differ slightly from that shown
+below due to cosmetic thematic variations in the appearance of
+workstation windowing systems.
+
+@image{detailed-analysis,,,View of window with numbered place markers,png}
+
+@enumerate
+
+@item
+Click on these arrow buttons to cycle through the companies in the
+current market in alphabetical order.  Once the last company is reached
+the cycle will wrap around to the first one, and similarly if cycling
+backwards from the first item.
+
+@item
+This panel serves both to indicate which company's data are being
+displayed in the chart, and to allow the user to select an arbitrary
+company in the current market: start typing here and a drop-down box
+will appear with possible completions of company names.  Once selected,
+press the ENTER key to load that company's data.
+
+@item
+This drop-down box will show all open positions you have in the present
+market (if any).  Selecting one will: load the data for that company,
+move the shares scale to indicate the number of shares you are holding,
+and will indicate the position in (time, value) space at which the
+position was opened, with a green vertical bar and tide line.
+
+@item
+When a new chart is loaded this panel shows the latest price per share
+of the commodity.  It can be edited, and then on pressing the enter key
+the new price will appear at the current time on the graph, allowing the
+user to manually input an up-to-date price.  He would especially want to
+do this prior to clicking the ‘BUY’ button as this price will then be
+entered as the purchase price of the newly opened position.
+
+@item
+This button will show either `BUY' or `SELL'.  If there is an open
+position on the stock being displayed, pressing the button will update
+the position as being closed at that time, at the price per share shown
+at (4).  Otherwise, pressing the button will create a record of an open
+position, using the unit price at (4) and the number of shares at (9).
+
+@item
+This axis shows the real value of the shares, taking into account the
+number of shares indicated at (9); it will change dynamically as that
+slider is moved.
+
+@item
+Dragging the mouse (holding the primary button down while moving) over a
+chart will cause a rectangular region to be highlighted, with
+information around the edge to indicate the increments in the various
+quantities that the lengths of the edges represent.  To remove this
+informative device, click anywhere on the chart.
+
+@item
+When the mouse cursor is over the chart, cross-hairs will provide
+precise information about times and stock values at that position.  Note
+that two numbers are generally displayed: to the right is the unit price
+of the stock, in pence/cents, and to the left is the full value of a
+position taking into account the number of shares at (9), in
+pounds/dollars/euro.  Also note the precise time displayed just above
+the bottom axis of the chart.
+
+@item
+Here you will see an indicated number of shares, used to work out the
+full value of any (potential) positions that might be opened, and to
+work out the profit line at (14).  In the case that there is a position
+open on this stock, the slider itself will not be present but will
+represent the number of shares in this position (the slider can be
+restored by selecting `NONE' at (3)).
+
+When a new position is to be recorded, this slider should be used to set
+the precise number of shares in the purchase, before pressing the buy
+button at (5).
+
+@item
+This slider alters the temporal span of the chart, allowing for the
+selection of a long-term or short-term view of the stock's value's
+evolution.
+
+@item
+This slider selects the size of the window used to calculate the mean
+data line (red line on the chart): a larger window means the line will
+be smoother.
+
+The size of the window is indicated at (15).
+
+@item
+This slider controls the width of the envelope (yellow area), so that
+the user can determine a useful measure of the variability of the data
+and the degree of extremity of the current position.
+
+@item
+This is a very dynamic scale showing the calendar time at which prices
+were obtained.  If weeks are being indicated, the dates shown will be
+those of the Mondays.
+
+@item
+The dark gray tide is the only one whose meaning is not obvious.  It
+represents the profit line for a position in this stock.  Taking into
+account the cost of trading (set in the preferences) this is the point
+above the current value at which those trading costs become offset by
+the increased value of the stock (taking the number of shares, set at
+(9), into account).  If there is an open position, the line will
+represent the real profit line for that position.  Otherwise it
+represents the profit point if the stock were purchased at the latest
+price.
+
+@item
+This vertical line represents the size of the moving-average window used
+to produce the smoothed time-series show in red on the chart.  The
+distance to the right-hand edge of the chart is half the window width:
+practically it means that the data-average line to the right of this
+vertical line is computed over a shorter window than the rest of the
+graph, making the line more erratic there, increasing so as the
+extremity of the chart is reached.
+
+
+@end enumerate
+
+
+@node Preferences, Menus, Detailed analysis, Getting Started
+@section The Preferences Dialog
+
+The preferences dialog allows the user to set parameters which affect
+the whole of the @code{trader-desk} application.  Note that there is no
+`SAVE' button here; pressing the enter key or dismissing the box will
+make the settings entered take effect immediately.
+
+@image{preferences,,,The preferences dialog box,png}
+
+The items are
+
+@enumerate
+
+@item Fixed cost of trading
+
+This should represent the fixed cost of buying @emph{and} selling shares
+(respectively, opening and closing a position).  It is expressed in
+pounds, but you may need to take this as dollars or whatever your major
+currency unit is.
+
+@item Proportional cost of trading
+
+This should represent the proportional cost (if any) of buying
+@emph{and} selling shares, expressed as a percentage.  It is usually
+used to account for stamp duty, but may also apply to agent or market
+fees.
+
+@end enumerate
+
+@node Menus,  , Preferences, Getting Started
+@section The Menus
+
+@itemize
+@item
+File -> Ingest new market
+
+This will bring up a dialog box allowing for the selection of a market
+whose data are not currently being tracked by this application.  Once
+selected, the progress of downloading historical data for that market
+will be indicated in the displays, but expect this to take some not
+inconsiderable amount of time.
+
+@item
+File -> Preferences
+
+Select this item to bring up the preferences dialog, allowing for the
+specification of parameters which affect the overall operation of this
+application.
+
+@item
+File -> Quit
+
+Select this to exit the program.
+
+@item
+Display
+
+Selecting this menu item will produce a list of all markets for which
+historical data are currently being held.  Select one of those items to
+see a market overview: thumbnail charts for all components in that
+market.
+
+@item
+Market -> Update latest data
+
+Selecting this will cause (after a short delay) the download of the
+latest prices for all the components in the current market.  Note that
+this option will be inactive if the display is not showing a market
+overview.
+
+@item
+Market -> Update close data
+
+This action will cause a fetch of all market closing prices for all
+components which are not currently in the database.  This is a slow
+process, but progress will be indicated through the real-time update of
+the market overview, and a scroll bar in a small pop-up dialog box.
+
+@item
+Help -> About
+
+This option will produce an informational dialog box, displaying the
+current state and credibility of this program.
+
+@end itemize
+
+
+@node Algorithms, Developer, User Guide, Top
+@chapter Hints for Algorithm Developers
+
+As previously alluded to, we don't supply any trading algorithms with
+this product.  Here we give some general hints to the top-level approach
+to developing algorithms.
+
+[This section of the manual is in an early stage of development and is
+probably not entirely useful at this time.]
+
+@section Comparing algorithms
+
+[This section of the manual is in an early stage of development and is
+probably not entirely useful at this time.]
+
+The basic idea is that you think of two possible approaches to making
+trading decisions based on all the current data for which you have
+historical records.  Run the two algorithms over the history of data you
+have (i.e., pretend that you have been trading stocks and shares for all
+that time), and compare the amount of money that each algorithm makes or
+loses.  Choose the most favourable one.
+
+Now take a close look at how the best algorithm performed, given the
+data, and try to think of a way to improve the algorithm.  Now iterate
+back to the paragraph above and compare the new algorithm with the
+previous best.  Either accept the new algorithm, and try to improve
+that, or reject it and go back to the drawing board.
+
+@section Iterate, find the best algorithm
+
+[This section of the manual is in an early stage of development and is
+probably not entirely useful at this time.]
+
+The next level of sophistication is to let the computer perform the hunt
+for the best algorithm.  This requires that the algorithm uses one or
+more parameters as part of its definition.  For example, you might
+decide to buy the stock for which the average difference between the
+previous @code{n} prices is biggest, out of all the available
+companies on the market.  This example has the single parameter,
+@code{n}, which can take on any of the values 2, 3, 4, ....  Choose a
+starting value, such as @code{n}=5.  Now get the computer to compare
+the returns with @code{n}=4 and @code{n}=6, and see if either are
+better than @code{n}=5.  If not, choose @code{n}=5 as the best
+algorithm.  If @code{n}=4 was best, have the computer next try
+@code{n}=3, or if @code{n}=6 was best, try @code{n}=7.
+Etcetera.
+
+If your algorithm has more than one parameter, it may become expensive
+to try all combinations of parameter variations about the vicinity of
+your starting point.  In this case you will have to try a smaller number
+of nearby points chosen at random, using a computer's pseudo-random
+number generation facilities.
+
+@section Using data
+
+The more information you have available to guide your dealing choices
+the better.  This program provides you with a daily history of closing
+prices, for an entire market.  However, if you can also draw on other
+data in real time, you should factor those into your decision algorithm.
+Unfortunately, you will always be at a disadvantage compared to
+professional traders with regards to news sources, as they pay stupid
+money to get the news delivered to them first.  Or perhaps you can think
+of a way to make old news work against the big boys... a bit of reverse
+psychology, perhaps?
+
+@menu
+* Bayes::
+@end menu
+
+@node Bayes,  , Algorithms, Algorithms
+@section The Bayesian Programme
+
+@subsection Bayes' Theorem
+
+[This section of the manual is in an early stage of development and is
+probably not entirely useful at this time.]
+
+The modern way to think in science is to realize that, going in to any
+experiment, we already have a good idea of what the outcome is likely to
+be, and that the effect of performing some investigation is to provide
+data which allow us to update, or refine, our initial idea based on the
+results.  We also take the view that we never know the true outcome of
+our experiments.
+
+@cindex Bayes' Theorem
+It starts with the simple idea that the probability of two events
+happening is the probability that the first event happens multiplied by
+the probability of the second event happening knowing that the first
+event already happened: P(A and B) = P(A)P(B|A).  But the argument could
+equally well have been made the other way around, and so P(A)P(B|A) =
+P(B)P(A|B).  Now re-arrange this to give P(B|A) = P(B)P(A|B)/P(A).  Now
+consider that the event A is the outcome of some experiment, and the
+event B is the probability that a model parameter has some specific
+value.  Then the above equation states that the parameter value given
+the experimental result is equal to the parameter value probability
+before the experiment multiplied by the probability that the
+experimental result came from a model with the original parameter
+probability and divided by the probability of the experimental result.
+In other words, it is a recipe for updating original knowledge of a
+parameter probability with the result of an experiment to measure that
+parameter.
+
+[Apply to market modelling.]
+
+@subsection The Metropolis Algorithm
+
+@node Developer, Time Line, Algorithms, Top
+@chapter Notes for Software Developers
+
+[This section of the manual is in an early stage of development and is
+probably not entirely useful at this time.]
+
+@menu
+* GIT::
+* Development Style::
+* Analytic Tools::
+* Trading Robots::
+@end menu
+
+@c @node GIT, Development Style, Developer, Developer
+@c @section Sources from GIT
+
+@c @cindex git
+@c @cindex gtkmm
+@c @cindex gcc
+@c @cindex bootstrap
+@c The procedure is essentially the same as for the user instructions
+@c above--including the setting up of a suitable database--, except for
+@c the extra boot-strapping step, which will require a suite of developer
+@c build facilites (autoconf @emph{et al.}) to be available on your system.  The
+@c development has been done on Ubuntu-1610, Debian stable and Guix,
+@c though the latter two require some choice package selections to be
+@c made (GTKmm and GCC need to be 2.x and 4.9.x, respectively).
+
+@c @example
+@c git clone .../trader-desk
+@c ./bootstrap.sh;
+@c [Edit trader-desk/config.h]
+@c ./configure --prefix=... --with-database-password= --without-boost
+@c make
+@c make install
+@c @end example
+
+
+@node Development Style, Analytic Tools, Developer, Developer
+@section Development philosophy
+
+[This section of the manual is in an early stage of development and is
+probably not entirely useful at this time.]
+
+@subsection Open source
+
+While we have nothing against the @emph{publish early, publish often}
+philosophy, it is not for us at this time.  While the project is in the
+early stages of development we are taking things carefully, slowly and
+methodically and following our own @ref{Time Line}, publishing only at
+planned islands of stability.
+
+We believe that this is most conducive to creating the project we want,
+and allows meaningful testing to take place without wasting too much of
+people's time.
+
+The intention is that the project will ultimately be owned, and a part
+of, the GNU project.  The intention is also that the hand-over will not
+occur before completion of the initial development and establishment of
+the code as being of production quality.  In the meantime, we keep
+ownership to ourselves, but all releases will be made under the
+GPLv3+.
+
+@subsection Programming
+
+[This section of the manual is in an early stage of development and is
+probably not entirely useful at this time.]
+
+@cindex guile
+We are massive fans of Guile and the Guile-as-extension-language
+paradigm, and given that the ultimate aim of this project is to provide
+a base for the development and deployment of artificially intelligent
+robots for making trading decisions, it would seem natural that most of
+the project would be written in Guile Scheme with only some essentially
+low-level core parts written in C.
+
+However, it is the intention that this application allows robots to run
+at least an order of magnitude faster than real-time (so that they can
+assimilate the entire history of the market and make timely
+recommendations for activity), and allows users to explore the market
+data and results of analysis with buttery-smooth interaction so that the
+mechanics of the software and data management do not interfere with the
+exploration and research of ideas.
+
+@cindex c++
+Thus the application is being developed purely in C++ (version 14 no
+less, and fully version 17 by the time the project reaches production
+release).  This language provides the performance and facilities we
+desire, provides the mechanisms to imbue innate structure to the
+software, and provides the means to specify clean, verifiable,
+interfaces for external modules.
+
+As to the programming style and project presentation we stick to the GNU
+coding standards and maintainer guidelines as far as practically
+possible (allowing for the fact that the standards only truly apply to
+software written in C).  Build management is achieved through Autotools,
+and package management is offered in the form of GUIX scripts.
+
+@subsubsection External dependencies
+
+We aim to keep external dependencies to a minimum, but these are the
+ones we currently use which are readily available to most GNU
+systems.
+
+@cindex gettext
+@itemize @bullet
+@item 
+@code{gettext}: for linguistic localization of the package;
+
+@cindex mariadb
+@item 
+A running @code{MariaDB} database and client library: to store locally
+and to query historical market data;
+
+@cindex gtkmm
+@item 
+@code{GTKmm}: the graphical widget toolkit on which the GUI is built (we
+are currently stuck at 2.4; the move to version 3 will be expedited as
+soon as we get the chance);
+
+@cindex curl
+@cindex libcurl
+@item
+@code{libcurl} on some TLS implementation: to access services on the
+Internet.
+
+@end itemize
+
+@cindex curlpp
+@cindex quote library
+@cindex bootstrap
+Additionally, we use @code{CURLpp} (to access libcurl through a C++
+interface) and the @code{quote} library (for access to the Yahoo!
+Finance API) which are seldom so readily available; these are packaged
+into distribution tarballs with the project sources, @c and a GIT bootstrap
+@c script is provided to pull the sources into a development project tree
+wherein they will be built and integrated through the Autotools
+mechanisms.
+
+@subsection Data sources
+    
+At the time of writing the only freely accessible and reliable source of
+market price data, both current and historical, is Yahoo!  Finance.  It
+is however absolutely not the intention of this package to nail itself
+to Yahoo!, and even though there are currently no alternatives the
+interface to the price server is to be fully abstracted to allow for new
+possibilities in the future.
+
+Unfortunately, Yahoo! does not provide a service which tells the
+components (companies) which make up a market, and their symbols are
+incompatible with those from other services (there is no standard,
+strangely enough).  Our solution is to provide a service at
+@url{https://rdmp.org/trader-desk} to provide the information, and which
+we are currently maintaining, by hand, ourselves (although the process
+will become more automated as we gain experience).  Again, it is the
+intention that this project's interface to the RDMP service will be
+fully abstracted, so that other back-ends can conceivably be developed
+in the future.
+
+@node Analytic Tools, Trading Robots, Development Style, Developer
+@section Creating Analytic Tools
+
+[This section of the manual is in an early stage of development and is
+probably not entirely useful at this time.]
+
+`Analytic tools' are interactive devices that allow a user to explore
+the data of a particular component of the market.  Examples of tools
+currently implemented: moving average and standard deviation-based
+envelope display, the position analyzer which puts the break-even
+tide mark onto all the plots, and the delta-region analyzer which allows
+the user to delineate a region on a chart and see the temporal and stock
+value changes which that area represents.
+
+These tools must all be derived from the Trader_Desk::Analyzer class.
+The collection of tools forms a stack inside the application, and each
+time a chart is to be rendered on-screen the stack will be called, in
+order, to render the analysis results for the eyes of the user.
+
+Currently there is no way to package tools so that they can be
+incorporated at run-time; that will (hopefully) come with the next
+pre-release.  To hack a new tool in, read the
+@code{trader-desk/analyzer.h}--the interface you need to implement--,
+and @code{trader-desk/moving-average-analyzer.h} sources which are
+heavily documented and provide a good example which can be used as a
+starting point for your own development.  Then edit
+@code{trader-desk/analyzer.cc} to cause your new object type to be
+realized within the application (this and @code{trader-desk/makefile.am}
+are the only original distribution source files you should need to
+touch).
+
+
+@node Trading Robots,  , Analytic Tools, Developer
+@section Developing Trading Robots
+
+[This section of the manual is in an early stage of development and is
+probably not entirely useful at this time.]
+
+Contrary to the analytic tools described in the previous section,
+which work on data of a single company, a trading robot is a tool
+which works on the data of an entire market.  As such, it is in a
+position to work out optimal trading strategies and make informed
+suggestions for the user's trading activities.
+
+At this point in time there actually are no hooks for where such code
+would be called out from the program, nor are there any well-defined
+interfaces for such beasts.  To get started you should familiarize
+yourself with the @code{Trader_Desk::Chart_Grid} object and its member
+types: @code{Trader_Desk::Chart_Data} and
+@code{Trader_Desk::Time_Series}; these hold the data you have to play
+with.  The sky's the limit and the rest is the extent of your
+ingenuity.
+
+Proper support for such robots will be along in the next pre-release
+(version 0.2).
+
+
+@node Time Line, Copying This Manual, Developer, Top
+@chapter Development Time Line; The State of the Onion
+
+Currently at version 0.1, the package is in alpha-development state and
+not at all well tested in the wild (well, it works for me...).
+
+It is anticipated that the following developments will take place before
+each release.  Note that there are no implied dates associated with the
+releases; you should assume several months will pass between each
+release.
+
+@table @samp
+
+@item 0.1
+
+Solid operation on limited data sets, and limited scope for extension
+(other than to hack the code).
+
+@item 0.2
+
+@itemize @bullet
+
+@item
+Move to GTKmm 3.x and GCC 6+;
+
+@item
+Re-factoring of the libraries into functional units;
+
+@item
+development of APIs for analytical tools and robot trader extensions;
+
+@item
+abstraction of database and market data server back-ends;
+
+@item 
+have full set of market data available.
+
+@end itemize
+
+Hopefully the code quality can be upgraded to beta status at this time.
+
+@item 0.3
+
+@itemize
+@item
+Choice of MySQL/MariaDB or Postgres as database back-end (maybe also
+sqlite, ndb, nosql?);
+
+@item
+display of historical positions (stock holdings) and API for
+retrospective analysis;
+
+@item
+indication of weekends and bank holidays with option to contract them on
+the charts.
+
+@item
+Hopefully the code can be considered fully production quality and made
+available to the masses as a full GNU product.
+
+@end itemize
+
+@item 0.4
+
+Abstraction of control interface, with implementations as command-line
+utility (usable in scripts) and web-centric service.
+
+@item 1.0
+
+Development complete; we will stay around to maintain the project, but
+otherwise it will be left in perpetuity to the FSF as part of the GNU
+project.
+
+@end table
+
+Of course, any serious bugs and issues which are reported will also be
+dealt with during the release cycle.
+
+As we are currently in alpha development and many changes to libraries
+and APIs are in the pipeline, we do not anticipate accommodating major
+development efforts from outside.  Minor patches to fix specific,
+definite problems in the code will be welcomed, however, as would
+proposals for future endeavours.
+
+Contact with the developers about any of the above issues can only be
+made through @url{https://rdmp.org/trader-desk/contact}; you may also
+make a request here to be added to a mailing list which will inform you
+about new releases (this is very low volume).
+
+
+@node Copying This Manual, Index, Time Line, Top
+@appendix Copying This Manual
+
+@c Get fdl.texi from http://www.gnu.org/licenses/fdl.html
+@include fdl.texi
+
+@node Index,  , Copying This Manual, Top
+@unnumbered Index
+
+@printindex cp
+
+@bye
+
+@c trader-desk.texi ends here

@@ -1,0 +1,179 @@
+# English translations for trader-desk package.
+# Copyright (C) 2020 Dale Mellor
+# This file is distributed under the same license as the trader-desk package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: trader-desk 0.1\n"
+"POT-Creation-Date: 2017-02-10 12:31+0000\n"
+"PO-Revision-Date: 2017-02-10 12:35+0000\n"
+"Last-Translator: Dale Mellor\n"
+"Language-Team: English (British)\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: trader-desk/chart.cc:257
+msgctxt "Label"
+msgid "Position value (pounds)"
+msgstr "Position value (£)"
+
+#: trader-desk/company-name-entry.cc:44
+msgctxt "Label"
+msgid "Company name: "
+msgstr "Company name: "
+
+#: trader-desk/date-range-scale.cc:9
+#, c-format
+msgctxt "Label"
+msgid "Date range = %.0f days"
+msgstr "Date range = %.0f days"
+
+#: trader-desk/moving-average-analyzer.h:29
+#, c-format
+msgctxt "Label"
+msgid "Mean window = %.0f days"
+msgstr "Mean window = %.0f days"
+
+#: trader-desk/positions-widget.cc:14
+msgctxt "Label"
+msgid "Positions"
+msgstr "Positions"
+
+#: trader-desk/positions-widget.cc:24
+msgctxt "Label"
+msgid "None"
+msgstr "None"
+
+#: trader-desk/sd-envelope-analyzer.h:32
+#, c-format
+msgctxt "Label Abbrev:Standard deviation"
+msgid "Envelope width = %.2f x std. dev."
+msgstr "Envelope width = %.2f x std. dev."
+
+#: trader-desk/shares-scale.cc:12
+#, c-format
+msgctxt "Label"
+msgid "Number of shares = %.0f"
+msgstr "Number of shares = %.0f"
+
+#: trader-desk/trader-desk.cc:27
+msgctxt "Window title"
+msgid "Updating database"
+msgstr "Updating database"
+
+#: trader-desk/trader-desk.cc:36
+msgctxt "Information"
+msgid "trader-desk: Fetching data from Internet"
+msgstr "trader-desk: Fetching data from Internet"
+
+#: trader-desk/trader-desk.cc:55
+msgctxt "Label"
+msgid "Fixed cost of trading"
+msgstr "Fixed cost of trading"
+
+#: trader-desk/trader-desk.cc:59
+msgctxt "Units:Worded:Monetary"
+msgid "pounds"
+msgstr "pounds"
+
+#: trader-desk/trader-desk.cc:62
+msgctxt "Label"
+msgid "Proportional cost of trading"
+msgstr "Proportional cost of trading"
+
+#: trader-desk/trader-desk.cc:65
+msgctxt "Units:Worded"
+msgid "percent"
+msgstr "percent"
+
+#: trader-desk/trader-desk.cc:76
+msgctxt "Window title"
+msgid "Trader-Desk: Preferences"
+msgstr "Trader-Desk: Preferences"
+
+#: trader-desk/trader-desk.cc:155 trader-desk/trader-desk.cc:167
+msgctxt "Instruction"
+msgid "Select market"
+msgstr "Select market"
+
+#: trader-desk/trader-desk.cc:175
+msgctxt "Join-A"
+msgid "Sorry, there are no"
+msgstr "Sorry, there are no"
+
+#: trader-desk/trader-desk.cc:179
+msgctxt "Join-A"
+msgid "new markets."
+msgstr "new markets."
+
+#: trader-desk/trader-desk.cc:182 trader-desk/trader-desk.cc:232
+msgctxt "Instruction"
+msgid "Cancel"
+msgstr "Cancel"
+
+#: trader-desk/trader-desk.cc:208
+msgctxt "Label"
+msgid "Market"
+msgstr "Market"
+
+#: trader-desk/trader-desk.cc:224
+msgctxt "Instruction, Join-B"
+msgid "Double-click a market name"
+msgstr "Double-click a market name"
+
+#: trader-desk/trader-desk.cc:229
+msgctxt "Instruction, Join-B"
+msgid "to ingest its data"
+msgstr "to ingest its data"
+
+#: trader-desk/trader-desk.cc:350 trader-desk/trader-desk.cc:386
+msgid "No Internet Connection"
+msgstr "No Internet Connection"
+
+#: trader-desk/trader-desk.cc:446
+msgctxt "Menu"
+msgid "_File"
+msgstr "_File"
+
+#: trader-desk/trader-desk.cc:448
+msgctxt "Menu"
+msgid "_Preferences"
+msgstr "_Preferences"
+
+#: trader-desk/trader-desk.cc:453
+msgctxt "Menu"
+msgid "_Display"
+msgstr "_Display"
+
+#: trader-desk/trader-desk.cc:455
+msgctxt "Menu"
+msgid "_Market"
+msgstr "_Market"
+
+#: trader-desk/trader-desk.cc:457
+msgctxt "Menu"
+msgid "_Help"
+msgstr "_Help"
+
+#: trader-desk/trader-desk.cc:458
+msgctxt "Menu"
+msgid "_About"
+msgstr "_About"
+
+#: trader-desk/trader-desk.cc:501
+msgctxt "Menu"
+msgid "Update _latest data"
+msgstr "Update _latest data"
+
+#: trader-desk/trader-desk.cc:506
+msgctxt "Menu"
+msgid "Update _close data"
+msgstr "Update _close data"
+
+#: trader-desk/trader-desk.cc:511
+msgctxt "Menu"
+msgid "_Ingest new market"
+msgstr "_Ingest new market"
